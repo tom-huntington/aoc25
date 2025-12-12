@@ -2,27 +2,24 @@
 &rs ∞ 0
 ⊜(∩□⊙(⊜∘⊸≠@ )°$"_: _")⊸≠@\n
 ≡°□
-⊸(˜⨂ "you")
-You ←
-⊸(˜⨂ "svr")
-Svr ←
-⊸(˜⨂ "fft")
-Fft ←
-⊸(˜⨂ "dac")
-Dac ←
-≡⌞(□⨂ ⊙°□)
-⊸(⇡⧻)
-≡(□≡⌞⊟ ⊙°□)
-°□/(□⊂ ∩°□)
-°⊚
-⍉
-⌝↘ -⊸/↥ ⊸△
-+°⊚ ¤ ˙⊟ -1 ⊸⧻
-# part 1
-# ⊸(= You ⇡ ⧻)
-# ⍥(/+× ⊸⊙⍉)∞ # 7
+˜⊂ "out"
+Lookup ←
 
-⊸(≡(□¤(+ Svr)⇡) = Svr ⇡ ⧻)
-≡¤⇡⊸⧻
-≡⌟(≡⌞(□ ⊂ °¤ ⊙°□))
-≡(△˜▽)
+≡⌞(□⨂ ⊙°□) Lookup # map strings to indices
+≡(□≡⌞⊟ ⊙°□) ⊸(⇡⧻) # enumerate to create edge list
+°□/(□⊂ ∩°□)       # flatten edge list
+⍉°⊚               # edge list to adjacence matrix
+
+PadMatrix ← ⌝↘-⧻Lookup ⊸△
+PadMatrix
+AdjMat ←
+
+OneHotMat ← PadMatrix°⊚¤˙⊟
+ZeroRow   ← ≠ ˜↯ ⊸⇡⧻Lookup
+NewAdjMat ← + × AdjMat ⊃ZeroRow OneHotMat
+OneHotVec ← = ⇡ ⧻ Lookup
+
+IterMult   ← ⍥(/+× ⊸⊙⍉)∞
+CountPaths ← ∪/+ IterMult ⊓OneHotVec NewAdjMat ∩⌞⨂Lookup °⊟
+≡CountPaths ["you"_"out" "svr"_"fft" "fft"_"dac" "dac"_"out" "svr"_"dac" "dac"_"fft" "fft"_"out"]
+⊙(/+≡/×↯2_3) °⊂ # paths a->b->c=(#paths a->b)*(#paths b->c)
